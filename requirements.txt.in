@@ -7,3 +7,8 @@
 
 # Use patched Odoo (see gitaggreate.yaml)
 odoo @ git+https://github.com/acsone/odoo@16.0-demo
+
+# Use OCA PR
+odoo-addon-account_reversal_usability @ \
+git+https://github.com/OCA/account-financial-tools\
+@refs/pull/1771/head#subdirectory=setup/account_reversal_usability
