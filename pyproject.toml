@@ -1,0 +1,20 @@
+# Use the hatchling build backend, with the hatch-odoo plugin.
+[build-system]
+requires = ["hatchling", "hatch-odoo"]
+build-backend = "hatchling.build"
+
+[project]
+name = "demo-odoo-project"
+version = "1.0.0"
+dynamic = ["dependencies"]
+
+# Tell hatchling where the source code is.
+[tool.hatch.build]
+packages = ["odoo"]
+
+# Tell hatch-odoo where to find Odoo addons.
+[tool.hatch-odoo]
+addons_dirs = ["odoo/addons"]
+
+# Enable the hatch-odoo metadata hook to generate dependencies from addons manifests.
+[tool.hatch.metadata.hooks.odoo-addons-dependencies]

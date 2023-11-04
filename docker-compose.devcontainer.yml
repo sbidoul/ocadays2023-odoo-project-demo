@@ -1,0 +1,15 @@
+# This compose, when merged into the main one, will run the devcontainer image.
+
+version: "3"
+
+services:
+  odoo:
+    build:
+      # run the devcontainer image
+      target: devcontainer
+    # don't start Odoo automatically
+    command: [sleep, infinity]
+    # mount the project directory into the container
+    volumes:
+      - .:/app
+      - $HOME/.cache/pip:/home/odoo/.cache/pip

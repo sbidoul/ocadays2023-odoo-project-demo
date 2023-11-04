@@ -1,0 +1,9 @@
+# This file constrains the versions to install.
+# From this, and pyproject.tom, pip-deepfreeze sync will
+# update requirements.txt with exact version pins.
+
+# Use Odoo recommended versions of dependencies
+-r https://raw.githubusercontent.com/odoo/odoo/16.0/requirements.txt
+
+# Use patched Odoo (see gitaggreate.yaml)
+odoo @ git+https://github.com/acsone/odoo@16.0-demo

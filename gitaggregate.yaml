@@ -1,0 +1,10 @@
+/tmp/odoo:
+  remotes:
+    odoo: https://github.com/odoo/odoo.git
+    acsone: ssh://git@github.com/acsone/odoo.git
+  merges:
+    - odoo 16.0
+  shell_command_after:
+    # Fix Odoo packaging to include addons
+    - curl -sSL https://github.com/odoo/odoo/pull/44001.patch | git am
+  target: acsone 16.0-demo

@@ -1,0 +1,42 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "../docker-compose.devcontainer.yml"
+  ],
+  "service": "odoo",
+  "workspaceFolder": "/app",
+  "forwardPorts": [
+    8069
+  ],
+  // Create and install a virtual environment. Why?
+  // - because the venv in /odoo is owned by root so can't be updated by the dev user
+  // - so adding/removing dependencies is fast, thanks to the pip cache mount above
+  // - because the venv is persistent across devcontainer restarts which means it is
+  //   not necessary to reinstall all dependencies every time requirements.txt changes
+  "remoteEnv": {
+    "PATH": "/app/.compose-data/.venv/bin:${containerEnv:PATH}",
+    "VIRTUAL_ENV": "/app/.compose-data/.venv"
+  },
+  "postCreateCommand": "/usr/bin/python3 -m venv .venv",
+  "postStartCommand": "pip-df sync",
+  "remoteUser": "odoo",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/app/.compose-data/.venv/bin/python",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/usr/bin/bash",
+            "icon": "terminal-bash"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+# This compose will build and run the production image.
+
+version: "3"
+
+services:
+  odoo:
+    depends_on:
+      - db
+      - kwkhtmltopdf
+    build:
+      context: .
+    ports:
+      - "8069:8069"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=odoo
+      - DB_PASSWORD=odoo
+      - DB_NAME=odoo
+      - WORKERS=0
+      # TODO currently not supported by the bedrock image
+      #- SMTP_SERVER=mailhog
+      #- SMTP_PORT=1025
+      - KWKHTMLTOPDF_SERVER_URL=http://kwkhtmltopdf:8080
+    volumes:
+      - ./.compose-data/odoo:/data/odoo
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    volumes:
+      - ./.compose-data/db:/var/lib/postgresql/data
+
+  kwkhtmltopdf:
+    image: ghcr.io/acsone/kwkhtmltopdf:0.12.5-latest
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
