@@ -19,8 +19,7 @@
     "PATH": "/app/.compose-data/.venv/bin:${containerEnv:PATH}",
     "VIRTUAL_ENV": "/app/.compose-data/.venv"
   },
-  "postCreateCommand": "/usr/bin/python3 -m venv .venv",
-  "postStartCommand": "pip-df sync",
+  "postStartCommand": "/odoo/bin/python3 -m venv /app/.compose-data/.venv && pip-df sync",
   "remoteUser": "odoo",
   "customizations": {
     "vscode": {
